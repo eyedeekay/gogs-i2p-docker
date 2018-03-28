@@ -27,9 +27,10 @@ run-gogs: network
 		--network-alias i2pgogs \
 		--hostname i2pgogs \
 		-p 127.0.0.1:3000:3000 \
+		-p 127.0.0.1:2222:2222 \
 		--volume $(WD)/sqlite:/var/sqlite \
-		--volume /etc/ssh:/etc/ssh \
 		--volume $(WD)/../.ssh:/var/lib/gogs/.ssh \
+		--volume $(WD)/sshd_config:/etc/ssh/sshd_config \
 		eyedeekay/i2pgogs
 
 clean-gogs:
