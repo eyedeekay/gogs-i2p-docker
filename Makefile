@@ -11,6 +11,7 @@ update: clean-eepsite update-gogs
 
 suggest-password:
 	echo "gogs:$(PASSWORD)" >> suggest-password
+	cp app.ini app.custom.ini
 
 config: suggest-password
 
