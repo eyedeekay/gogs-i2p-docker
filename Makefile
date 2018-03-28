@@ -79,5 +79,8 @@ clobber: clean
 surf:
 	http_proxy=http://127.0.0.1:4444 surf dwfxipghufoij7c3wwhgesttaooxeu6plwv3rqx3av3gyfkhduhq.b32.i2p
 
+firefox:
+	firefox http://dwfxipghufoij7c3wwhgesttaooxeu6plwv3rqx3av3gyfkhduhq.b32.i2p
+
 local:
 	surf http://127.0.0.1:3000
