@@ -1,22 +1,12 @@
 FROM alpine:edge
 ENV USERNAME=gogs
 RUN apk update
-RUN apk add gogs sqlite
+RUN apk add gogs sqlite openssh-keygen
 COPY app.custom.ini /etc/gogs/conf/app.ini
 RUN cp -R /usr/share/webapps/gogs/templates/ /usr/bin/templates/
 RUN cp -R /usr/share/webapps/gogs/public/ /usr/bin/public/
 RUN mkdir -p            /var/lib/gogs/repo /var/lib/gogs/data /var/lib/gogs/.ssh
-RUN adduser -h /var/sqlite -D sqlite sqlite
-RUN addgroup gogs; addgroup gogs gogs; addgroup gogs sqlite; addgroup sqlite gogs
-RUN chown -R sqlite:sqlite /var/sqlite
-RUN chmod -R o+w /var/sqlite
-RUN chown -R gogs:gogs  /var/lib/gogs/repo /var/lib/gogs/data /var/lib/gogs/.ssh
-RUN chmod -R o+w        /var/lib/gogs/repo /var/lib/gogs/data
-CMD ssh-keygen -t ecdsa -f /etc/ssh/ssh_host_ecdsa_key; \
-    ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key;\
-    ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key; \
-    /usr/sbin/sshd -h /etc/ssh/ssh_host_ecdsa_key; \
-    -h /etc/ssh/ssh_host_ed25519_key \
-    -h /etc/ssh/ssh_host_rsa_key -D & \
+RUN addgroup gogs; addgroup gogs gogs;
+CMD chown -R gogs:gogs /var/lib/gogs/; chmod -R a+r o+wx /var/lib/gogs/; \
+    chown -R gogs:gogs /var/sqlite; chmod -R o+rw /var/sqlite; \
     su gogs -c "gogs web -c /etc/gogs/conf/app.ini"
-

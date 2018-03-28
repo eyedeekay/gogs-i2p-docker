@@ -1,17 +1,18 @@
 
 WD := $(shell pwd)
+USERNAME := gogs
+PASSWORD := $(apg -a 1 -m 15 -x 20 -n 1 -M CL)
 
 site: update-gogs
 
-update: update-gogs update-eepsite
+update: clean-eepsite update-gogs
+	make local; true
+	make update-eepsite
 
-passwd:
-	apg -a 1 -m 15 -x 20 -n 1 -M CL > passwd
+suggest-password:
+	echo "gogs:$(PASSWORD)" >> suggest-password
 
-config:
-	cp -R $(HOME)/.ssh $(WD)/../.ssh
-	sed '0,/PASSWD =/s/PASSWD =/PASSWD =/' app.ini | tee app.custom.ini
-	#sed '0,/PASSWD =/s/PASSWD =/PASSWD = $(shell cat passwd)/' app.ini | tee app.custom.ini
+config: suggest-password
 
 install: config update
 
@@ -29,7 +30,7 @@ run-gogs: network
 		-p 127.0.0.1:3000:3000 \
 		-p 127.0.0.1:2222:2222 \
 		--volume $(WD)/sqlite:/var/sqlite \
-		--volume $(WD)/../.ssh:/var/lib/gogs/.ssh \
+		--volume $(WD)/gogs:/var/lib/gogs/ \
 		--volume $(WD)/sshd_config:/etc/ssh/sshd_config \
 		eyedeekay/i2pgogs
 
@@ -69,5 +70,13 @@ update-eepsite:
 log-eepsite:
 	docker logs -f i2pgogs-eepsite
 
+clean: clean-eepsite clean-gogs
+
+clobber: clean
+	rm -rf gogs sqlite
+
 surf:
 	http_proxy=http://127.0.0.1:4444 surf dwfxipghufoij7c3wwhgesttaooxeu6plwv3rqx3av3gyfkhduhq.b32.i2p
+
+local:
+	surf http://127.0.0.1:3000
