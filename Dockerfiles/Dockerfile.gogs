@@ -9,4 +9,5 @@ RUN mkdir -p            /var/lib/gogs/repo /var/lib/gogs/data /var/lib/gogs/.ssh
 RUN addgroup gogs; addgroup gogs gogs;
 CMD chown -R gogs:gogs /var/lib/gogs/; chmod -R a+r o+wx /var/lib/gogs/; \
     chown -R gogs:gogs /var/sqlite; chmod -R o+rw /var/sqlite; \
+    chown -R gogs:gogs /var/ssh; chmod -R o+rw /var/ssh; \
     su gogs -c "gogs web -c /etc/gogs/conf/app.ini"
