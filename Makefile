@@ -1,6 +1,8 @@
 
 WD := $(shell pwd)
 
+site: update-gogs
+
 update: update-gogs update-eepsite
 
 passwd:
@@ -65,3 +67,6 @@ update-eepsite:
 
 log-eepsite:
 	docker logs -f i2pgogs-eepsite
+
+surf:
+	http_proxy=http://127.0.0.1:4444 surf dwfxipghufoij7c3wwhgesttaooxeu6plwv3rqx3av3gyfkhduhq.b32.i2p
