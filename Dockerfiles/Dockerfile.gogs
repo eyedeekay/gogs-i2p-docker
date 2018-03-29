@@ -10,5 +10,8 @@ RUN addgroup gogs; addgroup gogs gogs;
 CMD chown -R gogs:gogs /var/lib/gogs/; chmod -R a+r /var/lib/gogs/; chmod o+wx /var/lib/gogs \
     chown -R gogs:gogs /var/sqlite; chmod -R o+rw /var/sqlite; \
     chown -R gogs:gogs /var/ssh; chmod -R o+rw /var/ssh; \
+    ssh-keygen -t rsa -f /var/ssh/ssh_host_rsa_key; \
+    ssh-keygen -t ecdsa -f /var/ssh/ssh_host_ecdsa_key; \
+    ssh-keygen -t ed25519 -f /var/ssh/ssh_host_ed25519_key; \
     /usr/sbin/sshd -D -f /etc/ssh/sshd_config & \
     su gogs -c "gogs web -c /etc/gogs/conf/app.ini"
