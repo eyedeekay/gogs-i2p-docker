@@ -24,7 +24,7 @@ LogLevel VERBOSE
 # Authentication:
 
 LoginGraceTime 2m
-PermitRootLogin no
+PermitRootLogin prohibit-password
 
 PubkeyAuthentication yes
 

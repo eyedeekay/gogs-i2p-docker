@@ -30,6 +30,7 @@ run-gogs: network
 		--hostname i2pgogs \
 		-p 127.0.0.1:3000:3000 \
 		-p 127.0.0.1:2222:22 \
+		--restart always \
 		--volume $(WD)/sqlite:/var/sqlite \
 		--volume $(WD)/gogs:/var/lib/gogs/ \
 		--volume $(WD)/sshd:/var/ssh/ \
