@@ -28,7 +28,7 @@ HostKey /var/ssh/ssh_host_ed25519_key
 
 # Authentication:
 
-#LoginGraceTime 2m
+LoginGraceTime 2m
 PermitRootLogin no
 #StrictModes yes
 #MaxAuthTries 6
