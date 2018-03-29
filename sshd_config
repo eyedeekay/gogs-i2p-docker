@@ -14,9 +14,9 @@ Port 22
 AddressFamily inet
 ListenAddress 0.0.0.0
 
-HostKey //home/git/.ssh/ssh_host_rsa_key
-HostKey //home/git/.ssh/ssh_host_ecdsa_key
-HostKey //home/git/.ssh/ssh_host_ed25519_key
+HostKey /home/git/.ssh/ssh_host_rsa_key
+HostKey /home/git/.ssh/ssh_host_ecdsa_key
+HostKey /home/git/.ssh/ssh_host_ed25519_key
 
 # Logging
 LogLevel VERBOSE
