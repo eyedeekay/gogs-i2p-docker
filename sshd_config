@@ -116,4 +116,4 @@ AllowTcpForwarding no
 #	PermitTTY no
 #	ForceCommand cvs server
 
-UsePrivilegeSeparation no
+#UsePrivilegeSeparation no
