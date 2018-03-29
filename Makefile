@@ -32,7 +32,8 @@ run-gogs: network
 		-p 127.0.0.1:2222:22 \
 		--volume $(WD)/sqlite:/var/sqlite \
 		--volume $(WD)/gogs:/var/lib/gogs/ \
-		--volume $(WD)/ssh:/var/ssh/ \
+		--volume $(WD)/sshd:/var/ssh/ \
+		--volume $(WD)/ssh:/home/git/.ssh/ \
 		--volume $(WD)/sshd_config:/etc/ssh/sshd_config \
 		eyedeekay/i2pgogs
 
