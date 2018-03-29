@@ -6,7 +6,7 @@ COPY app.custom.ini /etc/gogs/conf/app.ini
 RUN cp -R /usr/share/webapps/gogs/templates/ /usr/bin/templates/
 RUN cp -R /usr/share/webapps/gogs/public/ /usr/bin/public/
 RUN mkdir -p            /var/lib/gogs/repo /var/lib/gogs/data
-RUN adduser gogs -D git git
+RUN adduser -H -D git git
 RUN addgroup gogs; addgroup gogs gogs; addgroup git gogs; addgroup gogs git
 CMD chown -R git:git /var/lib/gogs/; chmod -R a+r /var/lib/gogs/; chmod o+wx /var/lib/gogs \
     chown -R git:git /var/sqlite; chmod -R o+rw /var/sqlite; \
