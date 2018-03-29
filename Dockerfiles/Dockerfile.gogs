@@ -8,7 +8,7 @@ RUN adduser -h /home/git -D git git
 RUN cp -R /usr/share/webapps/gogs/* /usr/bin
 RUN addgroup gogs; addgroup gogs gogs; addgroup git gogs; addgroup gogs git
 CMD chown -R git:git /var/lib/gogs/ /etc/gogs/ /var/lib/gogs /var/log/gogs /var/cache/gogs; \
-    chmod -R a+r /var/lib/gogs/ /var/log/gogs /var/cache/gogs /var/sqlite; \
+    chmod -R a+rw /var/lib/gogs/ /var/log/gogs /var/cache/gogs /var/sqlite; \
     chmod -R o+wx /var/lib/gogs /var/log/gogs /var/cache/gogs /var/sqlite; \
     chown -R git:git /home/git/.ssh; chmod -R 700 /home/git/.ssh; \
     ssh-keygen -t rsa -f /var/ssh/ssh_host_rsa_key; \
