@@ -15,9 +15,9 @@
 #ListenAddress 0.0.0.0
 #ListenAddress ::
 
-HostKey /etc/ssh/ssh_host_rsa_key
-HostKey /etc/ssh/ssh_host_ecdsa_key
-HostKey /etc/ssh/ssh_host_ed25519_key
+HostKey /var/ssh/ssh_host_rsa_key
+HostKey /var/ssh/ssh_host_ecdsa_key
+HostKey /var/ssh/ssh_host_ed25519_key
 
 # Ciphers and keying
 #RekeyLimit default none
@@ -38,7 +38,7 @@ PermitRootLogin no
 
 # The default is to check both .ssh/authorized_keys and .ssh/authorized_keys2
 # but this is overridden so installations will only check .ssh/authorized_keys
-AuthorizedKeysFile	/var/lib/gogs/.ssh/authorized_keys
+AuthorizedKeysFile	/var/ssh/authorized_keys
 
 #AuthorizedPrincipalsFile none
 
@@ -115,3 +115,5 @@ AllowTcpForwarding no
 #	AllowTcpForwarding no
 #	PermitTTY no
 #	ForceCommand cvs server
+
+UsePrivilegeSeparation no
