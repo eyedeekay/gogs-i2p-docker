@@ -87,3 +87,11 @@ firefox:
 
 local:
 	surf http://127.0.0.1:3000
+
+i2p-socks-proxy:
+	echo 'connect-proxy -S 127.0.0.1:4447 -R remote $$*' > i2p-socks-proxy
+	chmod +x i2p-socks-proxy
+
+install-bin: i2p-socks-proxy
+	sudo install -m755 i2p-socks-proxy /usr/bin/i2p-socks-proxy
+	git config --global core.gitproxy i2p-socks-proxy
