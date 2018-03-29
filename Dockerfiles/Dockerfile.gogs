@@ -5,7 +5,7 @@ RUN apk add gogs sqlite openssh-keygen openssh-server git
 COPY app.custom.ini /etc/gogs/conf/app.ini
 RUN mkdir -p            /var/lib/gogs/repo /var/lib/gogs/data
 RUN adduser -h /home/git -D git git
-RUN cp -R /usr/share/webapps/gogs/ /usr/bin/; chown -R git:git /home/git/gogs/
+RUN cp -R /usr/share/webapps/gogs/ /usr/bin
 RUN addgroup gogs; addgroup gogs gogs; addgroup git gogs; addgroup gogs git
 CMD chown -R git:git /var/lib/gogs/; chmod -R a+r /var/lib/gogs/; chmod o+wx /var/lib/gogs \
     chown -R git:git /var/sqlite; chmod -R o+rw /var/sqlite; \
