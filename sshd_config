@@ -10,9 +10,9 @@
 # possible, but leave them commented.  Uncommented options override the
 # default value.
 
-#Port 22
+Port 22
 #AddressFamily any
-#ListenAddress 0.0.0.0
+ListenAddress 0.0.0.0
 #ListenAddress ::
 
 HostKey /var/ssh/ssh_host_rsa_key
