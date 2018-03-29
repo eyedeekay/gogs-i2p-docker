@@ -7,10 +7,10 @@ RUN mkdir -p            /var/lib/gogs/repo /var/lib/gogs/data
 RUN adduser -h /home/git -D git git
 RUN cp -R /usr/share/webapps/gogs/* /usr/bin
 RUN addgroup gogs; addgroup gogs gogs; addgroup git gogs; addgroup gogs git
-CMD chown -R git:git /var/lib/gogs/ /etc/gogs/ /var/lib/gogs /var/log/gogs /var/cache/gogs /var/ssh; \
-    chmod -R a+rw /var/lib/gogs/ /var/log/gogs /var/cache/gogs /var/sqlite /var/ssh; \
-    chmod -R o+wx /var/lib/gogs /var/log/gogs /var/cache/gogs /var/sqlite; \
-    chown -R git:git /home/git/.ssh; chmod -R 700 /home/git/.ssh; \
+CMD chown -R git:git /var/sqlite /etc/gogs /var/lib/gogs /var/log/gogs /var/cache/gogs /var/ssh; \
+    chmod -R a+rw /var/sqlite /etc/gogs /var/lib/gogs /var/log/gogs /var/cache/gogs /var/ssh; \
+    chmod -R o+wx /var/sqlite /etc/gogs /var/lib/gogs /var/log/gogs /var/cache/gogs /var/ssh; \
+    chown -R git:git /home/git/; chmod -R 700 /home/git/.ssh; \
     ssh-keygen -t rsa -f /var/ssh/ssh_host_rsa_key; \
     ssh-keygen -t ecdsa -f /var/ssh/ssh_host_ecdsa_key; \
     ssh-keygen -t ed25519 -f /var/ssh/ssh_host_ed25519_key; \
