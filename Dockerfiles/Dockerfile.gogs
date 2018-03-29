@@ -9,11 +9,10 @@ RUN cp -R /usr/share/webapps/gogs/* /usr/bin
 RUN addgroup gogs; addgroup gogs gogs; addgroup git gogs; addgroup gogs git
 CMD chown -R git:git /var/lib/gogs/; chmod -R a+r /var/lib/gogs/; chmod o+wx /var/lib/gogs \
     chown -R git:git /var/sqlite; chmod -R o+rw /var/sqlite; \
-    chown -R git:git /var/ssh; chmod -R 700 /var/ssh; \
     chown -R git:git /home/git/.ssh; chmod -R 700 /hme/git/.ssh; \
     chown -R git:git /etc/gogs/ /var/log/gogs /var/cache/gogs; \
     ssh-keygen -t rsa -f /var/ssh/ssh_host_rsa_key; \
     ssh-keygen -t ecdsa -f /var/ssh/ssh_host_ecdsa_key; \
     ssh-keygen -t ed25519 -f /var/ssh/ssh_host_ed25519_key; \
-    /usr/sbin/sshd -D -f /etc/ssh/sshd_config & \
+    /usr/sbin/sshd -d -D -f /etc/ssh/sshd_config & \
     su git -c "gogs web -c /etc/gogs/conf/app.ini"
