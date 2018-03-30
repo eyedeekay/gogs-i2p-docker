@@ -77,8 +77,8 @@ log-eepsite:
 
 clean: clean-eepsite clean-gogs
 
-clobber: clean
-	sudo rm -rf gogs sqlite ssh sshd
+clobber: clean reset-ssh reset-db
+	sudo rm -rf gogs/*
 
 surf:
 	http_proxy=http://127.0.0.1:4444 surf dwfxipghufoij7c3wwhgesttaooxeu6plwv3rqx3av3gyfkhduhq.b32.i2p
@@ -90,7 +90,7 @@ test-commit:
 	touch README.md && git add . && git commit -am "test"
 
 test-push:
-	http_proxy=http://127.0.0.1:4444 git push
+	cd test; http_proxy=http://127.0.0.1:4444 git push
 
 firefox:
 	firefox http://dwfxipghufoij7c3wwhgesttaooxeu6plwv3rqx3av3gyfkhduhq.b32.i2p
@@ -107,13 +107,13 @@ install-bin: i2p-socks-proxy
 	git config --global core.gitproxy i2p-socks-proxy
 
 clean-session:
-	rm -rf gogs/data
+	sudo rm -rf gogs/data
 
 reset-ssh:
-	rm -rf ./ssh ./sshd
+	sudo rm -rf ./ssh/* ./sshd/*
 
 reset-db:
-	rm -rf sqlite
+	sudo rm -rf sqlite/*
 
 mon:
 	docker exec --user root i2pgogs ps aux

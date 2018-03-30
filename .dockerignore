@@ -1,8 +1,7 @@
-sqlite
 passwd
 suggest-password
-sqlite
 i2pd
-ssh
-sshd
-gogs
+ssh/*
+gogs/*
+sshd/*
+sqlite/*

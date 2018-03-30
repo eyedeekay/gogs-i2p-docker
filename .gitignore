@@ -1,7 +1,8 @@
 passwd
 suggest-password
 app.custom.ini
-sqlite
 i2pd
-ssh
-gogs
+ssh/*
+gogs/*
+sshd/*
+sqlite/*
