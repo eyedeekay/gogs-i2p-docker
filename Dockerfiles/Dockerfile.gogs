@@ -11,6 +11,7 @@ RUN find -type d -name gogs
 RUN chown -R git:git /etc/gogs \
     /home/git/ \
     /etc/gogs \
+    /var/tmp \
     /var/lib/gogs \
     /var/log/gogs \
     /var/cache/gogs
