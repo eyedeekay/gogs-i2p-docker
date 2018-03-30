@@ -5,9 +5,7 @@ PASSWORD := $(apg -a 1 -m 15 -x 20 -n 1 -M CL)
 
 site: update-gogs
 
-update: fix-perms clean-eepsite update-gogs
-	make local; true
-	make update-eepsite
+update: update-eepsite config update-gogs local
 
 suggest-password:
 	echo "gogs:$(PASSWORD)" >> suggest-password
