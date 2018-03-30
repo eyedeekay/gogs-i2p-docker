@@ -10,12 +10,10 @@ RUN cp -R /usr/share/webapps/gogs /home/git/gogs
 RUN find -type d -name gogs
 RUN chown -R git:git /etc/gogs \
     /home/git/ \
-    /var/sqlite \
     /etc/gogs \
     /var/lib/gogs \
     /var/log/gogs \
     /var/cache/gogs \
-    /var/ssh
 USER git
 CMD dropbear -R -F -E -m -w -s -g -a -K 120 -I 12000; \
     gogs web -c /etc/gogs/conf/app.ini
