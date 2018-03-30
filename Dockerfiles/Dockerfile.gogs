@@ -11,10 +11,11 @@ RUN find -type d -name gogs
 RUN chown -R git:git /etc/gogs \
     /home/git/ \
     /etc/gogs \
-    /var/tmp \
     /var/lib/gogs \
     /var/log/gogs \
+    /var/tmp \
     /var/cache/gogs
+RUN chmod a+rwx /var/tmp
 USER git
 CMD dropbear -r /home/git/.ssh/dropbear_dss_host_key \
     -r /home/git/.ssh/dropbear_rsa_host_key \
