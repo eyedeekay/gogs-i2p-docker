@@ -1,13 +1,11 @@
 FROM alpine:edge
 ENV USERNAME=git
 ENV USER=git
-RUN apk update
-RUN apk add gogs sqlite git dropbear
+RUN apk update && apk add gogs sqlite git dropbear
 COPY app.custom.ini /etc/gogs/conf/app.ini
-RUN mkdir -p            /var/lib/gogs/repo /var/lib/gogs/data
+RUN mkdir -p /var/lib/gogs/repo /var/lib/gogs/data /var/tmp
 RUN adduser -h /home/git -u 797 -D git git
 RUN cp -R /usr/share/webapps/gogs /home/git/gogs
-RUN find -type d -name gogs
 RUN chown -R git:git /etc/gogs \
     /home/git/ \
     /etc/gogs \
