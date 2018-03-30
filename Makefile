@@ -121,3 +121,4 @@ mon:
 fix-perms:
 	mkdir -p ssh sshd sqlite gogs
 	sudo chown -R 797:797 ssh sshd sqlite gogs
+	sudo chmod o+rw ssh sshd sqlite gogs
