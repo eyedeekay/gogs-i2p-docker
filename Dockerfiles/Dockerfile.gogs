@@ -8,10 +8,9 @@ RUN mkdir -p            /var/lib/gogs/repo /var/lib/gogs/data
 RUN adduser -h /home/git -D git git
 RUN cp -R /usr/share/webapps/gogs /home/git/gogs
 RUN find -type d -name gogs
-CMD chown -R git:git /var/sqlite /etc/gogs /var/lib/gogs /var/log/gogs /var/cache/gogs /var/ssh; \
-    chmod -R a+rw /var/sqlite /etc/gogs /var/lib/gogs /var/log/gogs /var/cache/gogs /var/ssh; \
-    chmod -R o+wx /var/sqlite /etc/gogs /var/lib/gogs /var/log/gogs /var/cache/gogs /var/ssh; \
-    chown -R git:git /home/git/; \
+CMD chown -R git:git /home/git/ /var/sqlite /etc/gogs /var/lib/gogs /var/log/gogs /var/cache/gogs /var/ssh; \
+    chmod -R a+rw    /home/git/ /var/sqlite /etc/gogs /var/lib/gogs /var/log/gogs /var/cache/gogs /var/ssh; \
+    chmod -R o+wx    /home/git/ /var/sqlite /etc/gogs /var/lib/gogs /var/log/gogs /var/cache/gogs /var/ssh; \
     su git -c "ssh-keygen -t rsa -f /home/git/.ssh/ssh_host_rsa_key"; \
     su git -c "ssh-keygen -t ecdsa -f /home/git/.ssh/ssh_host_ecdsa_key"; \
     su git -c "ssh-keygen -t ed25519 -f /home/git/.ssh/ssh_host_ed25519_key"; \
