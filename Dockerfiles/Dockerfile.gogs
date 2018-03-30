@@ -11,9 +11,9 @@ RUN find -type d -name gogs
 CMD chown -R git:git /home/git/ /var/sqlite /etc/gogs /var/lib/gogs /var/log/gogs /var/cache/gogs /var/ssh; \
     chmod -R a+rw    /home/git/ /var/sqlite /etc/gogs /var/lib/gogs /var/log/gogs /var/cache/gogs /var/ssh; \
     chmod -R o+wx    /home/git/ /var/sqlite /etc/gogs /var/lib/gogs /var/log/gogs /var/cache/gogs /var/ssh; \
-    su git -c "ssh-keygen -t rsa -f /home/git/.ssh/ssh_host_rsa_key"; \
-    su git -c "ssh-keygen -t ecdsa -f /home/git/.ssh/ssh_host_ecdsa_key"; \
-    su git -c "ssh-keygen -t ed25519 -f /home/git/.ssh/ssh_host_ed25519_key"; \
+    ssh-keygen -t rsa -f /home/git/.ssh/ssh_host_rsa_key; \
+    ssh-keygen -t ecdsa -f /home/git/.ssh/ssh_host_ecdsa_key; \
+    ssh-keygen -t ed25519 -f /home/git/.ssh/ssh_host_ed25519_key; \
     chmod -R 600 /home/git/.ssh; \
     /usr/sbin/sshd -e -D -f /etc/ssh/sshd_config & \
     su git -c "gogs web -c /etc/gogs/conf/app.ini"
