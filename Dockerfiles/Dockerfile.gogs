@@ -15,5 +15,5 @@ CMD chown -R git:git /var/sqlite /etc/gogs /var/lib/gogs /var/log/gogs /var/cach
     su git -c "ssh-keygen -t rsa -f /home/git/.ssh/ssh_host_rsa_key"; \
     su git -c "ssh-keygen -t ecdsa -f /home/git/.ssh/ssh_host_ecdsa_key"; \
     su git -c "ssh-keygen -t ed25519 -f /home/git/.ssh/ssh_host_ed25519_key"; \
-    /usr/sbin/sshd -D -f /etc/ssh/sshd_config & \
+    /usr/sbin/sshd -e -D -f /etc/ssh/sshd_config & \
     su git -c "gogs web -c /etc/gogs/conf/app.ini"
