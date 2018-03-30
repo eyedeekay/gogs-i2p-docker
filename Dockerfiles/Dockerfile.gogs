@@ -13,7 +13,7 @@ RUN chown -R git:git /etc/gogs \
     /etc/gogs \
     /var/lib/gogs \
     /var/log/gogs \
-    /var/cache/gogs \
+    /var/cache/gogs
 USER git
 CMD dropbear -R -F -E -m -w -s -g -a -K 120 -I 12000; \
     gogs web -c /etc/gogs/conf/app.ini
