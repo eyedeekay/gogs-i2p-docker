@@ -5,14 +5,14 @@ PASSWORD := $(apg -a 1 -m 15 -x 20 -n 1 -M CL)
 
 site: update-gogs
 
-update: clean-eepsite update-gogs
+update: fix-perms clean-eepsite update-gogs
 	make local; true
 	make update-eepsite
 
 suggest-password:
 	echo "gogs:$(PASSWORD)" >> suggest-password
 
-config: suggest-password
+config: suggest-password fix-perms
 	cp app.ini app.custom.ini
 	sed -i 's|changeme|$(shell apg -m 50 -n 1)|g' app.custom.ini
 
@@ -119,4 +119,5 @@ mon:
 	docker exec --user root i2pgogs ps aux
 
 fix-perms:
+	mkdir -p ssh sshd sqlite gogs
 	sudo chown -R 797:797 ssh sshd sqlite gogs
