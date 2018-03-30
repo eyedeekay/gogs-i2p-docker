@@ -1,5 +1,6 @@
 FROM alpine:edge
 ENV USERNAME=git
+ENV USER=git
 RUN apk update
 RUN apk add gogs sqlite openssh-keygen openssh-server git
 COPY app.custom.ini /etc/gogs/conf/app.ini
@@ -10,7 +11,7 @@ RUN addgroup gogs; addgroup gogs gogs; addgroup git gogs; addgroup gogs git
 CMD chown -R git:git /var/sqlite /etc/gogs /var/lib/gogs /var/log/gogs /var/cache/gogs /var/ssh; \
     chmod -R a+rw /var/sqlite /etc/gogs /var/lib/gogs /var/log/gogs /var/cache/gogs /var/ssh; \
     chmod -R o+wx /var/sqlite /etc/gogs /var/lib/gogs /var/log/gogs /var/cache/gogs /var/ssh; \
-    chown -R git:git /home/git/; chmod -R 700 /home/git/.ssh; \
+    chown -R git:git /home/git/; chmod -R 600 /home/git/.ssh; \
     su git -c "ssh-keygen -t rsa -f /home/git/.ssh/ssh_host_rsa_key"; \
     su git -c "ssh-keygen -t ecdsa -f /home/git/.ssh/ssh_host_ecdsa_key"; \
     su git -c "ssh-keygen -t ed25519 -f /home/git/.ssh/ssh_host_ed25519_key"; \
