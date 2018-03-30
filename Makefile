@@ -107,3 +107,6 @@ reset-ssh:
 
 reset-db:
 	rm -rf sqlite
+
+mon:
+	docker exec --user root i2pgogs ps aux
