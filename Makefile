@@ -78,7 +78,7 @@ log-eepsite:
 clean: clean-eepsite clean-gogs
 
 clobber: clean reset-ssh reset-db
-	sudo rm -rf gogs/*
+	sudo rm -rf ./gogs/*
 
 surf:
 	http_proxy=http://127.0.0.1:4444 surf dwfxipghufoij7c3wwhgesttaooxeu6plwv3rqx3av3gyfkhduhq.b32.i2p
@@ -113,7 +113,7 @@ reset-ssh:
 	sudo rm -rf ./ssh/* ./sshd/*
 
 reset-db:
-	sudo rm -rf sqlite/*
+	sudo rm -rf ./sqlite/*
 
 mon:
 	docker exec --user root i2pgogs ps aux
