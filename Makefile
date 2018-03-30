@@ -98,3 +98,12 @@ i2p-socks-proxy:
 install-bin: i2p-socks-proxy
 	sudo install -m755 i2p-socks-proxy /usr/bin/i2p-socks-proxy
 	git config --global core.gitproxy i2p-socks-proxy
+
+clean-session:
+	rm -rf gogs/data
+
+reset-ssh:
+	rm -rf ./ssh ./sshd
+
+reset-db:
+	rm -rf sqlite
