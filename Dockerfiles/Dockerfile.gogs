@@ -8,12 +8,12 @@ RUN mkdir -p            /var/lib/gogs/repo /var/lib/gogs/data
 RUN adduser -h /home/git -D git git
 RUN cp -R /usr/share/webapps/gogs /home/git/gogs
 RUN find -type d -name gogs
-CMD chown -R git:git /home/git/ /var/sqlite /etc/gogs /var/lib/gogs /var/log/gogs /var/cache/gogs /var/ssh; \
-    chmod -R a+rw    /home/git/ /var/sqlite /etc/gogs /var/lib/gogs /var/log/gogs /var/cache/gogs /var/ssh; \
-    chmod -R o+wx    /home/git/ /var/sqlite /etc/gogs /var/lib/gogs /var/log/gogs /var/cache/gogs /var/ssh; \
-    ssh-keygen -t rsa -f /home/git/.ssh/ssh_host_rsa_key; \
+CMD ssh-keygen -t rsa -f /home/git/.ssh/ssh_host_rsa_key; \
     ssh-keygen -t ecdsa -f /home/git/.ssh/ssh_host_ecdsa_key; \
     ssh-keygen -t ed25519 -f /home/git/.ssh/ssh_host_ed25519_key; \
+    chown -R git:git /home/git/ /var/sqlite /etc/gogs /var/lib/gogs /var/log/gogs /var/cache/gogs /var/ssh; \
+    chmod -R a+rw    /home/git/ /var/sqlite /etc/gogs /var/lib/gogs /var/log/gogs /var/cache/gogs /var/ssh; \
+    chmod -R o+wx    /home/git/ /var/sqlite /etc/gogs /var/lib/gogs /var/log/gogs /var/cache/gogs /var/ssh; \
     /usr/sbin/sshd -e -D -f /etc/ssh/sshd_config & \
     su git -c "gogs web -c /etc/gogs/conf/app.ini"
 
