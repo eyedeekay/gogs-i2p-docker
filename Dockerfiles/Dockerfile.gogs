@@ -8,6 +8,7 @@ RUN mkdir -p            /var/lib/gogs/repo /var/lib/gogs/data
 RUN adduser -h /home/git -D git git
 RUN cp -R /usr/share/webapps/gogs /home/git/gogs
 RUN addgroup gogs; addgroup gogs gogs; addgroup git gogs; addgroup gogs git
+RUN find -type d -name gogs
 CMD chown -R git:git /var/sqlite /etc/gogs /var/lib/gogs /var/log/gogs /var/cache/gogs /var/ssh; \
     chmod -R a+rw /var/sqlite /etc/gogs /var/lib/gogs /var/log/gogs /var/cache/gogs /var/ssh; \
     chmod -R o+wx /var/sqlite /etc/gogs /var/lib/gogs /var/log/gogs /var/cache/gogs /var/ssh; \

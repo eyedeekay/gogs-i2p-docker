@@ -77,7 +77,7 @@ log-eepsite:
 clean: clean-eepsite clean-gogs
 
 clobber: clean
-	rm -rf gogs sqlite ssh sshd
+	sudo rm -rf gogs sqlite ssh sshd
 
 surf:
 	http_proxy=http://127.0.0.1:4444 surf dwfxipghufoij7c3wwhgesttaooxeu6plwv3rqx3av3gyfkhduhq.b32.i2p
