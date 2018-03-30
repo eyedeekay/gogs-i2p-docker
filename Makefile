@@ -14,6 +14,7 @@ suggest-password:
 
 config: suggest-password
 	cp app.ini app.custom.ini
+	sed -i 's|changeme|$(shell apg -m 50 -n 1)|g' app.custom.ini
 
 install: config update
 
