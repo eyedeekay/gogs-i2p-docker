@@ -18,7 +18,7 @@ USER git
 CMD dropbear -r /home/git/.ssh/dropbear_dss_host_key \
     -r /home/git/.ssh/dropbear_rsa_host_key \
     -r /home/git/.ssh/dropbear_ecdsa_host_key \
-    -B -R -F -E -m -w -s -g -a -K 120 -I 12000 -p 0.0.0.0:2222; \
+    -B -R -F -E -m -w -s -g -a -K 120 -I 12000 -p 0.0.0.0:2222 & \
     gogs web -c /etc/gogs/conf/app.ini
 
 #chmod -R 600 /home/git/.ssh; \
