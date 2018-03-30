@@ -15,7 +15,7 @@ RUN chown -R git:git /etc/gogs \
     /var/log/gogs \
     /var/cache/gogs
 USER git
-CMD dropbear -R -F -E -m -w -s -g -a -K 120 -I 12000; \
+CMD dropbear -R -F -E -m -w -s -g -a -K 120 -I 12000 -p 0.0.0.0:2222; \
     gogs web -c /etc/gogs/conf/app.ini
 
 #chmod -R 600 /home/git/.ssh; \
