@@ -1,7 +1,7 @@
 FROM alpine:edge
 ENV USERNAME=git
 ENV USER=git
-RUN apk update && apk add gogs sqlite git dropbear
+RUN apk update && apk add gogs sqlite git dropbear openssh-keygen
 COPY app.custom.ini /etc/gogs/conf/app.ini
 RUN mkdir -p /var/lib/gogs/repo /var/lib/gogs/data /var/tmp
 RUN adduser -h /home/git -u 797 -D git git
@@ -14,7 +14,6 @@ RUN chown -R git:git /etc/gogs \
     /var/tmp \
     /var/cache/gogs
 RUN chmod a+rwx /var/tmp
-RUN apk search dropbear
 USER git
 CMD dropbear -r /home/git/.ssh/dropbear_dss_host_key \
     -r /home/git/.ssh/dropbear_rsa_host_key \
