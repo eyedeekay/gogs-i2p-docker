@@ -117,3 +117,6 @@ reset-db:
 
 mon:
 	docker exec --user root i2pgogs ps aux
+
+fix-perms:
+	sudo chown -R 797:797 ssh sshd sqlite gogs
