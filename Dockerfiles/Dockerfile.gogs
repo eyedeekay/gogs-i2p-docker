@@ -14,6 +14,7 @@ RUN chown -R git:git /etc/gogs \
     /var/tmp \
     /var/cache/gogs
 RUN chmod a+rwx /var/tmp
+RUN apk search dropbear
 USER git
 CMD dropbear -r /home/git/.ssh/dropbear_dss_host_key \
     -r /home/git/.ssh/dropbear_rsa_host_key \
