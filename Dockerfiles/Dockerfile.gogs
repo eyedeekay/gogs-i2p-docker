@@ -8,11 +8,19 @@ RUN mkdir -p            /var/lib/gogs/repo /var/lib/gogs/data
 RUN adduser -h /home/git -u 797 -D git git
 RUN cp -R /usr/share/webapps/gogs /home/git/gogs
 RUN find -type d -name gogs
+RUN chown -R git:git /etc/gogs \
+    /home/git/ \
+    /var/sqlite \
+    /etc/gogs \
+    /var/lib/gogs \
+    /var/log/gogs \
+    /var/cache/gogs \
+    /var/ssh
 USER git
 CMD dropbear -R -F -E -m -w -s -g -a -K 120 -I 12000; \
     gogs web -c /etc/gogs/conf/app.ini
 
 #chmod -R 600 /home/git/.ssh; \
-#chown -R git:git /home/git/ /var/sqlite /etc/gogs /var/lib/gogs /var/log/gogs /var/cache/gogs /var/ssh; \
+#chown -R git:git /etc/gogs /home/git/ /var/sqlite /etc/gogs /var/lib/gogs /var/log/gogs /var/cache/gogs /var/ssh; \
 #chmod -R a+rw    /home/git/ /var/sqlite /etc/gogs /var/lib/gogs /var/log/gogs /var/cache/gogs /var/ssh; \
 #chmod -R o+wx    /home/git/ /var/sqlite /etc/gogs /var/lib/gogs /var/log/gogs /var/cache/gogs /var/ssh; \
