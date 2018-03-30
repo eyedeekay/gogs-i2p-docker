@@ -117,6 +117,6 @@ mon:
 	docker exec --user root i2pgogs ps aux
 
 fix-perms:
-	mkdir -p ssh sshd sqlite gogs
-	sudo chown -R 797:797 ssh sshd sqlite gogs
+	mkdir -p ssh sqlite gogs gogs/data gogs/tmp gogs/archive gogs/avatars
+	sudo chown -R git:git ssh sshd sqlite gogs
 	sudo chmod -R o+rw ssh sshd sqlite gogs
