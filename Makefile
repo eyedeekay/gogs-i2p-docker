@@ -119,4 +119,4 @@ mon:
 fix-perms:
 	mkdir -p ssh sqlite gogs gogs/data gogs/tmp gogs/archive gogs/avatars
 	sudo chown -R git:git ssh sqlite gogs
-	sudo chmod -R o+rw ssh sshd sqlite gogs
+	sudo chmod -R o+rw ssh sqlite gogs
