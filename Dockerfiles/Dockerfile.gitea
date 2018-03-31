@@ -9,6 +9,8 @@ RUN apt-get update && apt-get install -y gitea \
     golang-github-go-macaron-inject-dev \
     golang-github-go-macaron-* psmisc
 #COPY app.custom.ini /etc/gitea/conf/app.ini
+RUN sed -i 's|START_SSH_SERVER           = false|START_SSH_SERVER           = true|g' /etc/gitea/conf/app.ini
+RUN sed -i 's|ENABLE_GZIP                = false|ENABLE_GZIP                = true|g' /etc/gitea/conf/app.ini
 RUN mkdir -p /var/lib/gitea/repo /var/lib/gitea/data /var/tmp /var/cache/gitea /usr/bin/indexers
 RUN chown -R gitea:gitea /var/lib/gitea /var/log/gitea /var/cache/gitea \
     /var/tmp /etc/gitea /usr/bin/indexers
