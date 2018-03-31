@@ -5,16 +5,16 @@ PASSWORD := $(shell apg -a 1 -m 10 -x 15 -n 1 -M CL)
 
 site: update-gitea
 
-update: update-dropbear update-eepsite update-gitea local
+update: update-dropbear update-eepsite update-gitea
 
 suggest-password:
 	echo "$(USERNAME):$(PASSWORD)" | tee suggest-password
 
-config: suggest-password fix-perms
+config: suggest-password
 	cp gitea.ini app.custom.ini
 	sed -i 's|changeme|$(shell apg -m 50 -n 1)|g' app.custom.ini
 
-install: update
+install: update-dropbear update-eepsite update-gitea
 
 network:
 	docker network create i2pgit; true
@@ -66,9 +66,6 @@ reset-db:
 
 mon:
 	docker exec --user root i2pgitea ps aux
-
-fix-perms:
-	mkdir -p ssh sqlite gitea gitea/data gitea/tmp gitea/archive gitea/avatars
 
 nuke:
 	sudo rm -rf gitea gogs sqlite ssh passwd suggest-password

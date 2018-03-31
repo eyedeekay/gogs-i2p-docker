@@ -1,7 +1,5 @@
 build-gitea:
 	docker build --force-rm \
-		--build-arg="username=$(shell sed 's|:.*||g' suggest-password)" \
-		--build-arg="password=$(shell sed 's|$(USER):||g' suggest-password)" \
 		-f Dockerfiles/Dockerfile.gitea \
 		-t eyedeekay/i2pgitea .
 
@@ -10,6 +8,8 @@ run-gitea: config network
 		--network i2pgit \
 		--network-alias i2pgitea \
 		--hostname i2pgitea \
+		--env="username=$(shell sed 's|:.*||g' suggest-password)" \
+		--env="password=$(shell sed 's|$(USER):||g' suggest-password)" \
 		-p 127.0.0.1:3000:3000 \
 		--restart always \
 		--volume $(WD)/sqlite:/var/sqlite \
