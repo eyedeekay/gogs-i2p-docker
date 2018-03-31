@@ -5,7 +5,7 @@ PASSWORD := $(shell apg -a 1 -m 10 -x 15 -n 1 -M CL)
 
 site: update-gitea
 
-update: update-dropbear update-eepsite update-gitea
+update: update-gitea update-dropbear update-eepsite
 
 suggest-password:
 	echo "$(USERNAME):$(PASSWORD)" | tee suggest-password
@@ -28,8 +28,11 @@ clean: clean-eepsite clean-gitea clean-dropbear
 clobber: clean reset-ssh reset-db
 	sudo rm -rf ./gitea/*
 
+curl:
+	curl -x 127.0.0.1:4444 http://dwfxipghufoij7c3wwhgesttaooxeu6plwv3rqx3av3gyfkhduhq.b32.i2p
+
 surf:
-	http_proxy=http://127.0.0.1:4444 surf dwfxipghufoij7c3wwhgesttaooxeu6plwv3rqx3av3gyfkhduhq.b32.i2p
+	http_proxy=http://127.0.0.1:4444 surf http://dwfxipghufoij7c3wwhgesttaooxeu6plwv3rqx3av3gyfkhduhq.b32.i2p
 
 test-clone:
 	http_proxy=http://127.0.0.1:4444 git clone http://dwfxipghufoij7c3wwhgesttaooxeu6plwv3rqx3av3gyfkhduhq.b32.i2p/eyedeekay/test
