@@ -1,99 +1,27 @@
 
 WD := $(shell pwd)
 USERNAME := $(USER)
-PASSWORD := $(apg -a 1 -m 15 -x 20 -n 1 -M CL)
+PASSWORD := $(shell apg -a 1 -m 10 -x 15 -n 1 -M CL)
 
 site: update-gitea
 
-update: config upgate-dropbear update-eepsite update-gitea local
+update: update-dropbear update-eepsite update-gitea local
 
 suggest-password:
-	echo "$(USERNAME):$(PASSWORD)" >> suggest-password
+	echo "$(USERNAME):$(PASSWORD)" | tee suggest-password
 
 config: suggest-password fix-perms
 	cp gitea.ini app.custom.ini
 	sed -i 's|changeme|$(shell apg -m 50 -n 1)|g' app.custom.ini
 
-install: config update
+install: update
 
 network:
 	docker network create i2pgit; true
 
-build-gitea:
-	docker build --force-rm -f Dockerfiles/Dockerfile.gitea -t eyedeekay/i2pgitea .
-
-run-gitea: network
-	docker run -d --name i2pgitea \
-		--network i2pgit \
-		--network-alias i2pgitea \
-		--hostname i2pgitea \
-		-p 127.0.0.1:3000:3000 \
-		--restart always \
-		--volume $(WD)/sqlite:/var/sqlite \
-		--volume $(WD)/gitea:/var/lib/gitea/ \
-		eyedeekay/i2pgitea
-
-clean-gitea:
-	docker rm -f i2pgitea; true
-
-update-gitea:
-	git pull
-	make clean-gitea build-gitea run-gitea
-
-log-gitea:
-	docker logs -f i2pgitea
-
-build-eepsite:
-	docker build --force-rm \
-		-f Dockerfiles/Dockerfile.eepsite \
-		-t eyedeekay/i2pgitea-eepsite .
-
-run-eepsite: network
-	docker run -d --name i2pgitea-eepsite \
-		--network i2pgit \
-		--network-alias i2pgitea-eepsite \
-		--hostname i2pgitea-eepsite \
-		--expose 4567 \
-		--link i2pgitea-dropbear \
-		--link i2pgitea-dropbear \
-		-p :4567 \
-		-p 127.0.0.1:7076:7076 \
-		--volume $(WD)/i2pd:/var/lib/i2pd:rw \
-		--restart always \
-		eyedeekay/i2pgitea-eepsite
-
-clean-eepsite:
-	docker rm -f i2pgitea-eepsite; true
-
-update-eepsite:
-	git pull
-	make clean-eepsite build-eepsite run-eepsite
-
-log-eepsite:
-	docker logs -f i2pgitea-eepsite
-
-build-dropbear:
-	docker build --force-rm -f Dockerfiles/Dockerfile.dropbear -t eyedeekay/i2pgitea-dropbear .
-
-run-dropbear: network
-	docker run -d --name i2pgitea-dropbear \
-		--network i2pgit \
-		--network-alias i2pgitea-dropbear \
-		--hostname i2pgitea-dropbear \
-		--expose 4567 \
-		--link i2pgitea \
-		--restart always \
-		eyedeekay/i2pgitea-dropbear
-
-clean-dropbear:
-	docker rm -f i2pgitea-dropbear; true
-
-update-dropbear:
-	git pull
-	make clean-dropbear build-dropbear run-dropbear
-
-log-dropbear:
-	docker logs -f i2pgitea-dropbear
+include includes/gitea.mk
+include includes/dropbear.mk
+include includes/eepsite.mk
 
 clean: clean-eepsite clean-gitea clean-dropbear
 
@@ -119,7 +47,8 @@ local:
 	surf http://127.0.0.1:3000
 
 i2p-socks-proxy:
-	echo 'connect-proxy -S 127.0.0.1:s -R remote $$*' > i2p-socks-proxy
+	echo '#! /usr/bin/env sh' | tee i2p-socks-proxy
+	echo 'connect-proxy -S 127.0.0.1:4447 -R remote $$*' | tee -a i2p-socks-proxy
 	chmod +x i2p-socks-proxy
 
 install-bin: i2p-socks-proxy
@@ -139,9 +68,8 @@ mon:
 	docker exec --user root i2pgitea ps aux
 
 fix-perms:
-	sudo mkdir -p ssh sqlite gitea gitea/data gitea/tmp gitea/archive gitea/avatars
-	sudo chown -R 101:102 ssh sqlite gitea
-	sudo chmod -R o+rw ssh sqlite gitea
+	mkdir -p ssh sqlite gitea gitea/data gitea/tmp gitea/archive gitea/avatars
 
 nuke:
 	sudo rm -rf gitea gogs sqlite ssh passwd suggest-password
+	docker rmi -f eyedeekay/i2pgitea eyedeekay/i2pgitea-dropbear eyedeekay/i2pgitea-eepsite

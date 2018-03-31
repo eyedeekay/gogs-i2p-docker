@@ -1,1 +1,2 @@
+#! /usr/bin/env sh
 connect-proxy -S 127.0.0.1:4447 -R remote $*
