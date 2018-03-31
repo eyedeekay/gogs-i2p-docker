@@ -1,0 +1,11 @@
+FROM debian:
+ENV USERNAME=gitea
+ENV USER=gitea
+RUN apt-get update && apt-get install dropbear
+RUN addgroup --gid 797 gitea; adduser --home /home/git --uid 797 --gid 797 --gecos ',,,,' --diabled-password gitea
+USER gitea
+CMD dropbear -r /home/gitea/.ssh/dropbear_dss_host_key \
+    -r /home/gitea/.ssh/dropbear_rsa_host_key \
+    -r /home/gitea/.ssh/dropbear_ecdsa_host_key \
+    -B -R -F -E -m -w -s -g -a -K 120 -I 12000 -p 0.0.0.0:2222
+

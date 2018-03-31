@@ -4,5 +4,6 @@ app.custom.ini
 i2pd
 ssh/*
 gogs/*
+gitea/*
 sshd/*
 sqlite/*

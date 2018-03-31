@@ -3,5 +3,6 @@ suggest-password
 i2pd
 ssh/*
 gogs/*
+gitea/*
 sshd/*
 sqlite/*
