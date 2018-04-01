@@ -3,6 +3,8 @@ WD := $(shell pwd)
 USERNAME := $(USER)
 PASSWORD := $(shell apg -a 1 -m 10 -x 15 -n 1 -M CL)
 
+include config.mk
+
 site: update-gitea
 
 update: update-gitea update-dropbear update-eepsite
@@ -12,7 +14,7 @@ suggest-password:
 
 config: suggest-password
 	cp gitea.ini app.custom.ini
-	sed -i 's|changeme|$(shell apg -m 50 -n 1)|g' app.custom.ini
+	sed -i 's|changeme|$(shell apg -m 50 -n 1 -a |)|g' app.custom.ini
 
 install: update-dropbear update-eepsite update-gitea
 
@@ -72,4 +74,4 @@ mon:
 
 nuke:
 	sudo rm -rf gitea gogs sqlite ssh passwd suggest-password
-	docker rmi -f eyedeekay/i2pgitea eyedeekay/i2pgitea-dropbear eyedeekay/i2pgitea-eepsite
+	docker rmi -f eyedeekay/i2pgitea eyedeekay/i2pgitea-dropbear eyedeekay/i2pgitea-eepsite; true

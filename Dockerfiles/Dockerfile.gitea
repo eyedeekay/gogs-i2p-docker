@@ -1,23 +1,33 @@
-FROM debian:sid
-ENV USERNAME=gitea
-ENV USER=gitea
-RUN sed -i 's|main|main contrib|g' /etc/apt/sources.list
-RUN apt-get update && apt-get install -y gitea \
-    sqlite \
-    git \
-    golang-github-go-macaron-gzip-dev \
-    golang-github-go-macaron-inject-dev \
-    golang-github-go-macaron-* psmisc
-#COPY app.custom.ini /etc/gitea/conf/app.ini
-RUN sed -i 's|START_SSH_SERVER           = false|START_SSH_SERVER           = true|g' /etc/gitea/conf/app.ini
-RUN sed -i 's|ENABLE_GZIP                = false|ENABLE_GZIP                = true|g' /etc/gitea/conf/app.ini
-RUN mkdir -p /var/lib/gitea/repo /var/lib/gitea/data /var/tmp /var/cache/gitea /usr/bin/indexers
-RUN chown -R gitea:gitea /var/lib/gitea /var/log/gitea /var/cache/gitea \
-    /var/tmp /etc/gitea /usr/bin/indexers
-RUN chmod a+rwx /var/tmp /var/cache/gitea /var/lib/gitea /var/log/gitea /var/tmp
+FROM eyedeekay/i2pgitea-base
+ENV USERNAME=gitea USER=gitea GITEA_WORK_DIR=/usr/share/gitea GITEA_CUSTOM_DIR=/usr/share/gitea/custom
+
+RUN sed -i 's|= Warn|= Info|g' /etc/gitea/conf/app.ini
+RUN sed -i 's|= file|= console|g' /etc/gitea/conf/app.ini
+RUN sed -i 's|= root|= gitea|g' /etc/gitea/conf/app.ini
+
+RUN sed -i 's|START_SSH_SERVER = false|START_SSH_SERVER = true|g' /etc/gitea/conf/app.ini
+RUN sed -i 's|%(SSH_PORT)s|2222|g' /etc/gitea/conf/app.ini
+#RUN sed -i 's|ENABLE_GZIP = false|ENABLE_GZIP = true|g' /etc/gitea/conf/app.ini
+
+RUN apt-get update && apt-get install gzip
+
+RUN mkdir -p /var/tmp \
+    /usr/bin/indexers \
+    /usr/share/gitea/custom/conf
+
+RUN cp /etc/gitea/conf/app.ini \
+    /usr/share/gitea/custom/conf/app.ini
+
+RUN chown -R gitea:gitea /var/tmp \
+    /etc/gitea \
+    /usr/bin/indexers
+
+RUN chmod a+rwx /var/tmp /var/lib/gitea /var/log/gitea
+
+COPY scripts/launch.sh /usr/share/gitea/launch.sh
+
 WORKDIR /usr/share/gitea
-CMD chown -R gitea:gitea /var/lib/gitea /var/sqlite && \
-    chmod -R o+rw /var/lib/gitea /var/sqlite  && \
-    su gitea -c 'gitea web -c /etc/gitea/conf/app.ini' & sleep 5; su gitea -c 'killall gitea' && \
-    su gitea -c "gitea admin create-user --name $username --password $password --email adm@$username.i2p --admin -c /etc/gitea/conf/app.ini"; \
-    su gitea -c 'gitea web -c /etc/gitea/conf/app.ini'
+
+RUN ls /var/*/gitea -lah
+
+CMD ./launch.sh

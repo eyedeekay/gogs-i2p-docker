@@ -1,0 +1,8 @@
+#RUN sed -i 's|LOCAL_COPY_PATH = /tmp/local-repo|LOCAL_COPY_PATH = /var/tmp|g' /etc/gitea/conf/app.ini
+#RUN sed -i 's|USER                = root|USER                = gitea|g' /etc/gitea/conf/app.ini
+#RUN sed -i 's|ENABLE_OPENID_SIGNIN = true|ENABLE_OPENID_SIGNIN = false|g' /etc/gitea/conf/app.ini
+#RUN sed -i 's|DISABLE_GIT_HOOKS                 = false|DISABLE_GIT_HOOKS                 = true|g' /etc/gitea/conf/app.ini
+#RUN sed -i 's|ROOT                      = /var/lib/gitea/repositories|ROOT                      = /var/lib/gitea/repo|g' /etc/gitea/conf/app.ini
+
+#RUN sed -i 's|LANGS = en-US,zh-CN,zh-HK,zh-TW,de-DE,fr-FR,nl-NL,lv-LV,ru-RU,ja-JP,es-ES,pt-BR,pl-PL,bg-BG,it-IT,fi-FI,tr-TR,cs-CZ,sr-SP,sv-SE,ko-KR|LANGS = en-US|g' /etc/gitea/conf/app.ini
+#RUN sed -i 's|NAMES = English,简体中文,繁體中文（香港）,繁體中文（台灣）,Deutsch,Français,Nederlands,Latviešu,Русский,日本語,Español,Português do Brasil,polski,български,Italiano,Suomalainen,Türkçe,čeština,Српски,Svenska,한국어|NAMES = English|g' /etc/gitea/conf/app.ini

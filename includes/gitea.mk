@@ -1,4 +1,9 @@
-build-gitea:
+build-gitea-base:
+	docker build --force-rm \
+		-f Dockerfiles/Dockerfile.gitea-base \
+		-t eyedeekay/i2pgitea-base .
+
+build-gitea: build-gitea-base
 	docker build --force-rm \
 		-f Dockerfiles/Dockerfile.gitea \
 		-t eyedeekay/i2pgitea .
@@ -32,3 +37,8 @@ log-gitea:
 
 restart-gitea: build-gitea
 	docker restart i2pgitea
+
+copy-gitea:
+	docker cp i2pgitea:/etc/gitea/conf/app.ini .
+
+test-gitea: update-gitea copy-gitea log-gitea

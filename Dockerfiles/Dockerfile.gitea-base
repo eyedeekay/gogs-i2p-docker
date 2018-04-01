@@ -1,0 +1,8 @@
+FROM debian:sid
+RUN sed -i 's|main|main contrib|g' /etc/apt/sources.list
+RUN apt-get update && apt-get install -y gitea \
+    sqlite \
+    git \
+    golang-github-go-macaron-gzip-dev \
+    golang-github-go-macaron-inject-dev \
+    golang-github-go-macaron-* psmisc
