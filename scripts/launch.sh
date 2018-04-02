@@ -10,7 +10,6 @@ restore_symlinks(){
 fix_perms(){
     chown -R gitea:gitea /var/lib/gitea /var/sqlite /usr/share/gitea /etc/gitea
     chmod -R o+rw /var/lib/gitea /var/sqlite /etc/gitea
-    ls -lah /var/lib/gitea
 }
 
 config_user(){

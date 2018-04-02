@@ -1,0 +1,15 @@
+FROM debian:sid
+ENV USERNAME=gitea
+ENV USER=gitea
+ENV HOME=/usr/share/gitea
+ENV C=en_US
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y openssh-server
+RUN addgroup --gid 102 gitea; adduser --home /usr/share/gitea --uid 101 --gid 102 --gecos ',,,,' --disabled-password gitea
+WORKDIR /usr/share/gitea
+CMD chown gitea:gitea /usr/share/gitea/.ssh; \
+    chmod -R o+rw /usr/share/gitea/.ssh/; \
+    su gitea -c '/usr/sbin/dropbear -r /usr/share/gitea/.ssh/dropbear_dss_host_key \
+    -r /usr/share/gitea/.ssh/dropbear_rsa_host_key \
+    -r /usr/share/gitea/.ssh/dropbear_ecdsa_host_key \
+    -B -R -F -E -w -s -g -a -K 120 -I 12000 -p 0.0.0.0:2222'
+

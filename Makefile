@@ -7,7 +7,7 @@ include config.mk
 
 site: update-gitea
 
-update: update-gitea update-dropbear update-eepsite
+update: update-gitea update-eepsite
 
 suggest-password:
 	echo "$(USERNAME):$(PASSWORD)" | tee suggest-password
@@ -16,16 +16,16 @@ config: suggest-password
 	cp app.ini app.custom.ini
 	sed -i 's|changeme|$(shell apg -m 50 -n 1 -E "|")|g' app.custom.ini
 
-install: update-dropbear update-eepsite update-gitea
+install: update
 
 network:
 	docker network create i2pgit; true
 
 include includes/gitea.mk
-include includes/dropbear.mk
+include includes/opensshd.mk
 include includes/eepsite.mk
 
-clean: clean-eepsite clean-gitea clean-dropbear
+clean: clean-eepsite clean-gitea clean-opensshd
 
 clobber: clean reset-ssh reset-db
 	sudo rm -rf ./gitea/*
@@ -74,4 +74,4 @@ mon:
 
 nuke:
 	sudo rm -rf gitea gogs sqlite ssh passwd suggest-password
-	docker rmi -f eyedeekay/i2pgitea eyedeekay/i2pgitea-dropbear eyedeekay/i2pgitea-eepsite; true
+	docker rmi -f eyedeekay/i2pgitea eyedeekay/i2pgitea-opensshd eyedeekay/i2pgitea-eepsite; true

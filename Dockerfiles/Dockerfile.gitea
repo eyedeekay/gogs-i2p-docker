@@ -6,13 +6,13 @@ RUN sed -i 's|= file|= console|g' /etc/gitea/conf/app.ini
 RUN sed -i 's|= root|= gitea|g' /etc/gitea/conf/app.ini
 
 RUN sed -i 's|START_SSH_SERVER = false|START_SSH_SERVER = true|g' /etc/gitea/conf/app.ini
-RUN sed -i 's|%(SSH_PORT)s|2222|g' /etc/gitea/conf/app.ini
+RUN sed -i 's|SSH_PORT = 22|SSH_PORT = 2222|g' /etc/gitea/conf/app.ini
 
 #RUN sed -i 's|ENABLE_GZIP = false|ENABLE_GZIP = true|g' /etc/gitea/conf/app.ini
 
 COPY options/gitignore /etc/gitea/gitignore
 COPY options/license /etc/gitea/license
-COPY options/ /etc/gitea/options/
+COPY options /etc/gitea/options/
 COPY options/locale /etc/gitea/conf/locale
 COPY options/readme /etc/gitea/readme
 
