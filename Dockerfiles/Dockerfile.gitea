@@ -1,5 +1,5 @@
 FROM eyedeekay/i2pgitea-base
-ENV USERNAME=gitea USER=gitea GITEA_WORK_DIR=/usr/share/gitea GITEA_CUSTOM_DIR=/usr/share/gitea/custom
+ENV USERNAME=gitea USER=gitea GITEA_WORK_DIR=/var/lib/gitea GITEA_CUSTOM_DIR=/var/lib/gitea/custom
 
 RUN sed -i 's|= Warn|= Info|g' /etc/gitea/conf/app.ini
 RUN sed -i 's|= file|= console|g' /etc/gitea/conf/app.ini
@@ -7,27 +7,17 @@ RUN sed -i 's|= root|= gitea|g' /etc/gitea/conf/app.ini
 
 RUN sed -i 's|START_SSH_SERVER = false|START_SSH_SERVER = true|g' /etc/gitea/conf/app.ini
 RUN sed -i 's|%(SSH_PORT)s|2222|g' /etc/gitea/conf/app.ini
+
 #RUN sed -i 's|ENABLE_GZIP = false|ENABLE_GZIP = true|g' /etc/gitea/conf/app.ini
 
-RUN apt-get update && apt-get install gzip
-
-RUN mkdir -p /var/tmp \
-    /usr/bin/indexers \
-    /usr/share/gitea/custom/conf
-
-RUN cp /etc/gitea/conf/app.ini \
-    /usr/share/gitea/custom/conf/app.ini
-
-RUN chown -R gitea:gitea /var/tmp \
-    /etc/gitea \
-    /usr/bin/indexers
-
-RUN chmod a+rwx /var/tmp /var/lib/gitea /var/log/gitea
+COPY options/gitignore /etc/gitea/gitignore
+COPY options/license /etc/gitea/license
+COPY options/ /etc/gitea/options/
+COPY options/locale /etc/gitea/conf/locale
+COPY options/readme /etc/gitea/readme
 
 COPY scripts/launch.sh /usr/share/gitea/launch.sh
 
-WORKDIR /usr/share/gitea
+WORKDIR /var/lib/gitea
 
-RUN ls /var/*/gitea -lah
-
-CMD ./launch.sh
+CMD /usr/share/gitea/launch.sh

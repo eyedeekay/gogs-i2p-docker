@@ -13,8 +13,8 @@ suggest-password:
 	echo "$(USERNAME):$(PASSWORD)" | tee suggest-password
 
 config: suggest-password
-	cp gitea.ini app.custom.ini
-	sed -i 's|changeme|$(shell apg -m 50 -n 1 -a |)|g' app.custom.ini
+	cp app.ini app.custom.ini
+	sed -i 's|changeme|$(shell apg -m 50 -n 1 -E "|")|g' app.custom.ini
 
 install: update-dropbear update-eepsite update-gitea
 
